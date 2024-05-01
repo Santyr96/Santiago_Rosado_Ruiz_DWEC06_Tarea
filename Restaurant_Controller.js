@@ -710,17 +710,18 @@ class RestaurantController {
     let error;
     let dish;
     let menu;
+    let menus;
     try {
       dish = this[MODEL].getDishByName(name);
-      console.log(dish);
       menu = this[MODEL].getMenuByName(menuName);
       this[MODEL].assignDishtoMenu(menu, dish);
+      menus = this[MODEL].dishInMenus(dish.name);
       done = true;
     } catch (exception) {
       done = false;
       error = exception;
     }
-    this[VIEW].showAssignDishModal(done, dish, error);
+    this[VIEW].showAssignDishModal(done, dish, error,menus);
   };
 
   //Manejador de eventos que se encarga de la gestión para desasignar un plato de un menú.
@@ -729,10 +730,12 @@ class RestaurantController {
     let error;
     let dish;
     let menu;
+    let menus;
     try {
       dish = this[MODEL].getDishByName(name);
       menu = this[MODEL].getMenuByName(menuName);
       this[MODEL].deassignDishToMenu(menu, dish);
+      menus = this[MODEL].dishInMenus(dish.name);
 
       done = true;
     } catch (exception) {
@@ -740,7 +743,7 @@ class RestaurantController {
       error = exception;
     }
 
-    this[VIEW].showDesassignDishModal(done, dish, error);
+    this[VIEW].showDesassignDishModal(done, dish, error,menus);
   };
 
   //Manejador de eventos que se encarga de mostrar los menús a los que pertenece un plato.
